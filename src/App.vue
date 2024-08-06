@@ -1,9 +1,28 @@
-<script></script>
+<script>
+import HeaderPage from "./components/HeaderPage.vue";
+import NavPage from "./components/NavPage.vue";
+
+export default {
+  data() {
+    return {};
+  },
+
+  components: {
+    HeaderPage,
+    NavPage,
+  },
+};
+</script>
 
 <template>
   <div class="container-app">
-    <nav></nav>
-    <main></main>
+    <nav>
+      <nav-page></nav-page>
+    </nav>
+    <main>
+      <header-page></header-page>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
@@ -12,6 +31,7 @@
 
 body {
   background-color: black;
+  color: white;
 }
 
 .container-app {
@@ -21,6 +41,7 @@ body {
   nav {
     width: 30%;
     height: calc(100vh - 60px);
+    overflow: scroll;
     border-radius: 2rem;
     background-color: rgb(43, 43, 43);
   }
@@ -30,6 +51,7 @@ body {
     height: calc(100vh - 60px);
     border-radius: 2rem;
     background-color: rgb(43, 43, 43);
+    overflow: scroll;
   }
 }
 </style>
