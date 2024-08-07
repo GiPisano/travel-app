@@ -1,17 +1,23 @@
 <template>
   <div>
-    <h2>Add a New Place</h2>
+    <h2>Edit Place</h2>
     <form @submit.prevent="submitForm">
       <input v-model="name" placeholder="Name of the place" required />
-      <input type="file" @change="handleFileChange" />
       <input v-model="startDate" type="date" required />
       <input v-model="endDate" type="date" required />
+      <input type="file" @change="handleFileChange" />
+      <img
+        :src="img"
+        v-if="img"
+        alt="Preview"
+        style="max-width: 100%; margin-top: 10px"
+      />
       <textarea
         v-model="description"
         placeholder="Description"
         required
       ></textarea>
-      <button type="submit">Add Place</button>
+      <button type="submit">Save Changes</button>
     </form>
   </div>
 </template>
@@ -22,14 +28,32 @@ import { store } from "../../store/store.js";
 export default {
   data() {
     return {
+      id: null,
       name: "",
-      img: null,
       startDate: "",
       endDate: "",
       description: "",
+      img: null,
     };
   },
+  created() {
+    this.loadPlace();
+  },
+
   methods: {
+    loadPlace() {
+      const placeId = parseInt(this.$route.params.id);
+      const place = store.places.find((p) => p.id === placeId);
+      if (place) {
+        this.id = place.id;
+        this.name = place.name;
+        this.startDate = place.startDate;
+        this.endDate = place.endDate;
+        this.description = place.description;
+        this.img = place.img;
+      }
+    },
+
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -40,16 +64,17 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+
     submitForm() {
-      const newPlace = {
-        id: Date.now(),
+      const updatedPlace = {
+        id: this.id,
         name: this.name,
-        img: this.img,
         startDate: this.startDate,
         endDate: this.endDate,
         description: this.description,
+        img: this.img,
       };
-      store.addPlace(newPlace);
+      store.editPlace(updatedPlace);
       this.$router.push("/");
     },
   },
