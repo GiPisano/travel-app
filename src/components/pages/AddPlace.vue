@@ -1,21 +1,3 @@
-<template>
-  <div>
-    <h2>Add a New Place</h2>
-    <form @submit.prevent="submitForm">
-      <input v-model="name" placeholder="Name of the place" required />
-      <input type="file" @change="handleFileChange" />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <textarea
-        v-model="description"
-        placeholder="Description"
-        required
-      ></textarea>
-      <button type="submit">Add Place</button>
-    </form>
-  </div>
-</template>
-
 <script>
 import { store } from "../../store/store.js";
 
@@ -55,6 +37,24 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <h2>Add a New Place</h2>
+    <form @submit.prevent="submitForm">
+      <input v-model="name" placeholder="Name of the place" required />
+      <input type="file" @change="handleFileChange" />
+      <input v-model="startDate" type="date" required />
+      <input v-model="endDate" type="date" required />
+      <textarea
+        v-model="description"
+        placeholder="Description"
+        required
+      ></textarea>
+      <button type="submit">Add Place</button>
+    </form>
+  </div>
+</template>
 
 <style>
 form {

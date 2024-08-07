@@ -7,11 +7,46 @@ export default {
       places: store.places,
     };
   },
+  methods: {
+    viewDetails(place) {
+      this.$router.push({ name: "DetailPlace", params: { id: place.id } });
+    },
+  },
 };
 </script>
 <template>
-  <div v-for="place in places">
-    {{ place.name }}
+  <div class="d-flex">
+    <div v-for="place in places">
+      <div class="container-place" @click="viewDetails(place)">
+        <div class="circle">
+          <img :src="place.img" alt="Preview" />
+          <div class="name">{{ place.name }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container-place {
+  margin: 2rem;
+  display: flex;
+  cursor: pointer;
+  .circle {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+</style>

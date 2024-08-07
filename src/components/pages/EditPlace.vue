@@ -1,27 +1,3 @@
-<template>
-  <div>
-    <h2>Edit Place</h2>
-    <form @submit.prevent="submitForm">
-      <input v-model="name" placeholder="Name of the place" required />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <input type="file" @change="handleFileChange" />
-      <img
-        :src="img"
-        v-if="img"
-        alt="Preview"
-        style="max-width: 100%; margin-top: 10px"
-      />
-      <textarea
-        v-model="description"
-        placeholder="Description"
-        required
-      ></textarea>
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
-</template>
-
 <script>
 import { store } from "../../store/store.js";
 
@@ -80,6 +56,30 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <h2>Edit Place</h2>
+    <form @submit.prevent="submitForm">
+      <input v-model="name" placeholder="Name of the place" required />
+      <input v-model="startDate" type="date" required />
+      <input v-model="endDate" type="date" required />
+      <input type="file" @change="handleFileChange" />
+      <img
+        :src="img"
+        v-if="img"
+        alt="Preview"
+        style="max-width: 100%; margin-top: 10px"
+      />
+      <textarea
+        v-model="description"
+        placeholder="Description"
+        required
+      ></textarea>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</template>
 
 <style>
 form {

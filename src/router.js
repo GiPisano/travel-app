@@ -3,6 +3,7 @@ import AddPlace from "./components/pages/AddPlace.vue";
 import HomePage from "./components/pages/HomePage.vue";
 import HolidayPage from "./components/pages/HolidayPage.vue";
 import EditPlace from "./components/pages/EditPlace.vue";
+import DetailPlace from "./components/pages/DetailPlace.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,12 @@ const router = createRouter({
       path: "/edit-place:id",
       name: "EditPlace",
       component: EditPlace,
+      props: true,
+    },
+    {
+      path: "/detail-place:id",
+      name: "DetailPlace",
+      component: DetailPlace,
       props: true,
     },
   ],

@@ -1,21 +1,3 @@
-<template>
-  <div class="container-nav">
-    <div>
-      Add place
-      <span class="btn" @click="goToAddPlace"
-        ><i class="fa-solid fa-plus"></i
-      ></span>
-    </div>
-    <ul>
-      <li v-for="place in places" :key="place.id">
-        {{ place.name }}: {{ place.startDate }} to {{ place.endDate }}
-        <button @click="removePlace(place)">Delete</button>
-        <button @click="editPlace(place)">Edit</button>
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script>
 import { store } from "../store/store.js";
 
@@ -39,22 +21,95 @@ export default {
 };
 </script>
 
+<template>
+  <div class="container-nav">
+    <div>
+      Add place
+      <span class="btn" @click="goToAddPlace"
+        ><i class="fa-solid fa-plus"></i
+      ></span>
+    </div>
+    <div>
+      <div class="box-place">
+        <div v-for="place in places" :key="place.id" class="container-place">
+          <div class="circle">
+            <img :src="place.img" alt="Preview" />
+          </div>
+          <div class="details">
+            <p>WERE: {{ place.name }}</p>
+            <p>START: {{ place.startDate }}</p>
+            <p>END: {{ place.endDate }}</p>
+          </div>
+          <div class="buttons-utility">
+            <button @click="editPlace(place)" class="pen">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+            <button @click="removePlace(place)" class="trash">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style scoped lang="scss">
+.box-place {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.container-place {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .container-nav {
   margin: 20px;
+  .btn {
+    color: white;
+  }
+  .btn:hover {
+    border: 1px solid white;
+  }
   div {
-    .btn {
-      color: white;
-      border: 1px solid white;
-      padding: 3px 6px;
+    .buttons-utility {
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      gap: 0.5rem;
+      button {
+        background-color: white;
+        color: black;
+        padding: 4px 8px;
+        border-radius: 20px;
+      }
+
+      .pen:hover {
+        background-color: green;
+        color: white;
+      }
+
+      .trash:hover {
+        background-color: red;
+        color: white;
+      }
     }
   }
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 5px;
-    }
+}
+.circle {
+  width: 100px;
+  height: 100px;
+  margin-right: 2rem;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
   }
+}
+p {
+  margin: 0;
 }
 </style>
