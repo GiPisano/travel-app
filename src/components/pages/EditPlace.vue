@@ -16,6 +16,11 @@ export default {
     this.loadPlace();
   },
 
+  watch: {
+    // Osserva i cambiamenti nel parametro 'id' della route
+    // Quando il parametro 'id' cambia, chiama il metodo 'loadPlace' per aggiornare i dati del posto
+    "$route.params.id": "loadPlace",
+  },
   methods: {
     loadPlace() {
       const placeId = parseInt(this.$route.params.id);
@@ -29,7 +34,6 @@ export default {
         this.img = place.img;
       }
     },
-
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -40,7 +44,6 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-
     submitForm() {
       const updatedPlace = {
         id: this.id,

@@ -24,13 +24,13 @@ const router = createRouter({
       component: HolidayPage,
     },
     {
-      path: "/edit-place:id",
+      path: "/edit-place/:id",
       name: "EditPlace",
       component: EditPlace,
       props: true,
     },
     {
-      path: "/detail-place:id",
+      path: "/detail-place/:id",
       name: "DetailPlace",
       component: DetailPlace,
       props: true,
