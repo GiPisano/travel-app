@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AddPlace from "./components/pages/AddPlace.vue";
+import AddPlace from "./components/pages/crudPlace/AddPlace.vue";
 import HomePage from "./components/pages/HomePage.vue";
 import HolidayPage from "./components/pages/HolidayPage.vue";
-import EditPlace from "./components/pages/EditPlace.vue";
-import DetailPlace from "./components/pages/DetailPlace.vue";
+import EditPlace from "./components/pages/crudPlace/EditPlace.vue";
+import DetailPlace from "./components/pages/crudPlace/DetailPlace.vue";
 
 const router = createRouter({
   history: createWebHistory(),
