@@ -54,7 +54,10 @@ export default {
         img: this.img,
       };
       store.editPlace(updatedPlace);
-      this.$router.push("/");
+      this.$router.push({
+        name: "DetailPlace",
+        params: { id: updatedPlace.id },
+      });
     },
   },
 };

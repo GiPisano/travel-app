@@ -15,8 +15,8 @@ export default {
 };
 </script>
 <template>
-  <div class="d-flex">
-    <div v-for="place in places">
+  <div class="row m-2 g-5">
+    <div v-for="place in places" class="col-md-3">
       <div class="container-place" @click="viewDetails(place)">
         <div class="circle">
           <img :src="place.img" alt="Preview" />
@@ -28,8 +28,6 @@ export default {
 </template>
 <style lang="scss" scoped>
 .container-place {
-  margin: 2rem;
-  display: flex;
   cursor: pointer;
   .circle {
     width: 150px;

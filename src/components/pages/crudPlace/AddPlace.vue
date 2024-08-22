@@ -32,7 +32,7 @@ export default {
         description: this.description,
       };
       store.addPlace(newPlace);
-      this.$router.push("/");
+      this.$router.push({ name: "DetailPlace", params: { id: newPlace.id } });
     },
   },
 };

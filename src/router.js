@@ -4,6 +4,9 @@ import HomePage from "./components/pages/HomePage.vue";
 import HolidayPage from "./components/pages/HolidayPage.vue";
 import EditPlace from "./components/pages/crudPlace/EditPlace.vue";
 import DetailPlace from "./components/pages/crudPlace/DetailPlace.vue";
+import FormDay from "./components/pages/days/FormDay.vue";
+import EditDay from "./components/pages/days/EditDay.vue";
+import DetailDay from "./components/pages/days/DetailDay.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,14 +17,14 @@ const router = createRouter({
       component: HomePage,
     },
     {
-      path: "/add-place",
-      name: "AddPlace",
-      component: AddPlace,
-    },
-    {
       path: "/holiday",
       name: "holiday",
       component: HolidayPage,
+    },
+    {
+      path: "/add-place",
+      name: "AddPlace",
+      component: AddPlace,
     },
     {
       path: "/edit-place/:id",
@@ -33,6 +36,24 @@ const router = createRouter({
       path: "/detail-place/:id",
       name: "DetailPlace",
       component: DetailPlace,
+      props: true,
+    },
+    {
+      path: "/organize-day/:id/:day",
+      name: "FormDay",
+      component: FormDay,
+      props: true,
+    },
+    {
+      path: "/edit-day/:id/:day",
+      name: "EditDay",
+      component: EditDay,
+      props: true,
+    },
+    {
+      path: "/detail-day/:id/:day",
+      name: "DetailDay",
+      component: DetailDay,
       props: true,
     },
   ],

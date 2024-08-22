@@ -40,15 +40,21 @@ export default {
 
       return days;
     },
+
     handleDayClick(day) {
       console.log("Giorno selezionato:", day);
+      const placeId = this.place.id;
+      this.$router.push({
+        name: "FormDay",
+        params: { id: placeId, day: day.label },
+      });
     },
   },
 };
 </script>
 
 <template>
-  <div v-if="place">
+  <div v-if="place" class="margin">
     <div class="container-detail">
       <div class="circle">
         <img :src="place.img" alt="Preview" />
@@ -57,24 +63,23 @@ export default {
         <h2>{{ place.name }}</h2>
         <p><strong>Start Date:</strong> {{ place.startDate }}</p>
         <p><strong>End Date:</strong> {{ place.endDate }}</p>
-        <p><strong>Description:</strong> {{ place.description }}</p>
       </div>
     </div>
-    <div class="container">
-      <div class="days-container">
-        <div>
-          <div class="row g-3">
-            <div
-              class="col-3"
-              @click="handleDayClick(day)"
-              :key="day"
-              v-for="day in getDays()"
-            >
-              <div class="card">
-                <div class="card-header">DAY: {{ day.label }}</div>
-                <div class="card-body">{{ day.date }}</div>
-              </div>
-            </div>
+    <p class="description">
+      <strong>Description:</strong> {{ place.description }}
+    </p>
+
+    <div class="days-container">
+      <div class="row g-3">
+        <div
+          class="col-md-3"
+          @click="handleDayClick(day)"
+          :key="day"
+          v-for="day in getDays()"
+        >
+          <div class="card">
+            <div class="card-header">DAY: {{ day.label }}</div>
+            <div class="card-body">{{ day.date }}</div>
           </div>
         </div>
       </div>
@@ -86,7 +91,6 @@ export default {
 .container-detail {
   display: flex;
   align-items: center;
-  margin: 2rem;
   .circle {
     width: 150px;
     height: 150px;
@@ -97,12 +101,16 @@ export default {
       border-radius: 50%;
     }
   }
-  .details {
-    h2 {
-      margin: 0 0 1rem;
-    }
-    p {
-      margin: 0.5rem 0;
+}
+
+.margin {
+  margin: 2rem;
+}
+
+.days-container {
+  .row {
+    .col-md-3 {
+      cursor: pointer;
     }
   }
 }

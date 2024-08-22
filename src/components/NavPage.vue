@@ -13,6 +13,7 @@ export default {
     },
     removePlace(place) {
       store.removePlace(place);
+      this.$router.push({ name: "holiday" });
     },
     editPlace(place) {
       this.$router.push({ name: "EditPlace", params: { id: place.id } });
