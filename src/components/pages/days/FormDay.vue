@@ -11,9 +11,6 @@ export default {
       previewImages: [], // Per memorizzare le immagini di anteprima
     };
   },
-  props: {
-    dayDetails: Object, // Ottenuto da un componente genitore o store
-  },
   created() {
     this.loadDayDetails();
   },
@@ -54,7 +51,6 @@ export default {
       // Salva il posto aggiornato nello store
       store.updatePlace(this.place);
 
-      // Opzionale: Mostra un messaggio di successo o esegui altre azioni
       alert("Dettagli del giorno salvati con successo!");
       this.goBack();
     },
