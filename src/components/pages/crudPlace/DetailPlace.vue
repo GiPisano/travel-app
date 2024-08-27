@@ -1,10 +1,34 @@
+<template>
+  <div>
+    <h2>{{ place.name }}</h2>
+    <img :src="place.img" alt="Immagine del Posto" />
+    <p>{{ place.description }}</p>
+
+    <div v-if="place.days.length">
+      <h3>Giorni:</h3>
+      <ul>
+        <li
+          v-for="(day, index) in place.days"
+          :key="index"
+          @click="handleDayClick(index)"
+        >
+          {{ `Giorno ${index + 1}: ${day.date}` }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p>Nessun giorno disponibile</p>
+    </div>
+  </div>
+</template>
+
 <script>
 import { store } from "../../../store/store.js";
 
 export default {
   data() {
     return {
-      place: null,
+      place: {},
     };
   },
   created() {
@@ -13,105 +37,46 @@ export default {
   methods: {
     loadPlace() {
       const placeId = parseInt(this.$route.params.id);
-      this.place = store.places.find((p) => p.id === placeId);
-    },
-
-    getDays() {
-      if (!this.place || !this.place.startDate || !this.place.endDate)
-        return [];
-
-      const startDate = new Date(this.place.startDate);
-      const endDate = new Date(this.place.endDate);
-      const days = [];
-
-      let dayCount = 1;
-      for (
-        let date = new Date(startDate);
-        date <= endDate;
-        date.setDate(date.getDate() + 1)
-      ) {
-        const formattedDate = date.toISOString().split("T")[0];
-        days.push({
-          label: `${dayCount}`,
-          date: formattedDate,
-        });
-        dayCount++;
+      const storedPlace = store.places.find((p) => p.id === placeId);
+      if (storedPlace) {
+        this.place = storedPlace;
       }
-
-      return days;
     },
+    handleDayClick(dayIndex) {
+      const dayDetails = this.place.days[dayIndex];
+      const dayHasDetails =
+        dayDetails.description ||
+        dayDetails.lunch ||
+        dayDetails.dinner ||
+        dayDetails.placesToVisit?.length ||
+        dayDetails.images?.length;
 
-    handleDayClick(day) {
-      console.log("Giorno selezionato:", day);
-      const placeId = this.place.id;
       this.$router.push({
-        name: "FormDay",
-        params: { id: placeId, day: day.label },
+        name: dayHasDetails ? "DetailDay" : "FormDay",
+        params: { id: this.place.id, day: dayIndex },
       });
     },
   },
 };
 </script>
 
-<template>
-  <div v-if="place" class="margin">
-    <div class="container-detail">
-      <div class="circle">
-        <img :src="place.img" alt="Preview" />
-      </div>
-      <div class="details">
-        <h2>{{ place.name }}</h2>
-        <p><strong>Start Date:</strong> {{ place.startDate }}</p>
-        <p><strong>End Date:</strong> {{ place.endDate }}</p>
-      </div>
-    </div>
-    <p class="description">
-      <strong>Description:</strong> {{ place.description }}
-    </p>
-
-    <div class="days-container">
-      <div class="row g-3">
-        <div
-          class="col-md-3"
-          @click="handleDayClick(day)"
-          :key="day"
-          v-for="day in getDays()"
-        >
-          <div class="card">
-            <div class="card-header">DAY: {{ day.label }}</div>
-            <div class="card-body">{{ day.date }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style lang="scss" scoped>
-.container-detail {
-  display: flex;
-  align-items: center;
-  .circle {
-    width: 150px;
-    height: 150px;
-    margin-right: 2rem;
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-  }
+<style>
+img {
+  max-width: 100%;
+  height: auto;
 }
-
-.margin {
-  margin: 2rem;
+ul {
+  list-style-type: none;
+  padding: 0;
 }
-
-.days-container {
-  .row {
-    .col-md-3 {
-      cursor: pointer;
-    }
-  }
+li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+li:hover {
+  background-color: #e0e0e0;
 }
 </style>

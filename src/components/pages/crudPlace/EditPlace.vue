@@ -1,37 +1,39 @@
+<template>
+  <div>
+    <h2>Modifica Posto</h2>
+    <form @submit.prevent="updatePlace">
+      <input v-model="place.name" placeholder="Nome del posto" required />
+      <input type="file" @change="handleFileChange" />
+      <input v-model="place.startDate" type="date" required />
+      <input v-model="place.endDate" type="date" required />
+      <textarea
+        v-model="place.description"
+        placeholder="Descrizione"
+        required
+      ></textarea>
+      <button type="submit">Salva Modifiche</button>
+    </form>
+  </div>
+</template>
+
 <script>
 import { store } from "../../../store/store.js";
 
 export default {
   data() {
     return {
-      id: null,
-      name: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-      img: null,
+      place: {},
     };
   },
   created() {
     this.loadPlace();
   },
-
-  watch: {
-    // Osserva i cambiamenti nel parametro 'id' della route
-    // Quando il parametro 'id' cambia, chiama il metodo 'loadPlace' per aggiornare i dati del posto
-    "$route.params.id": "loadPlace",
-  },
   methods: {
     loadPlace() {
       const placeId = parseInt(this.$route.params.id);
-      const place = store.places.find((p) => p.id === placeId);
-      if (place) {
-        this.id = place.id;
-        this.name = place.name;
-        this.startDate = place.startDate;
-        this.endDate = place.endDate;
-        this.description = place.description;
-        this.img = place.img;
+      const originalPlace = store.places.find((p) => p.id === placeId);
+      if (originalPlace) {
+        this.place = JSON.parse(JSON.stringify(originalPlace)); // Copia profonda
       }
     },
     handleFileChange(event) {
@@ -39,53 +41,45 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.img = e.target.result;
+          this.place.img = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     },
-    submitForm() {
-      const updatedPlace = {
-        id: this.id,
-        name: this.name,
-        startDate: this.startDate,
-        endDate: this.endDate,
-        description: this.description,
-        img: this.img,
-      };
-      store.editPlace(updatedPlace);
-      this.$router.push({
-        name: "DetailPlace",
-        params: { id: updatedPlace.id },
-      });
+    getDaysWithinRange(startDate, endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const days = [];
+
+      for (
+        let date = new Date(start);
+        date <= end;
+        date.setDate(date.getDate() + 1)
+      ) {
+        days.push({
+          date: date.toISOString().split("T")[0],
+        });
+      }
+
+      return days;
+    },
+    updatePlace() {
+      const newDays = this.getDaysWithinRange(
+        this.place.startDate,
+        this.place.endDate
+      );
+      this.place.days = newDays.map((newDay, index) => ({
+        ...this.place.days[index],
+        date: newDay.date,
+      }));
+
+      store.updatePlace(this.place);
+      localStorage.setItem("places", JSON.stringify(store.places));
+      this.$router.push({ name: "DetailPlace", params: { id: this.place.id } });
     },
   },
 };
 </script>
-
-<template>
-  <div>
-    <h2>Edit Place</h2>
-    <form @submit.prevent="submitForm">
-      <input v-model="name" placeholder="Name of the place" required />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <input type="file" @change="handleFileChange" />
-      <img
-        :src="img"
-        v-if="img"
-        alt="Preview"
-        style="max-width: 100%; margin-top: 10px"
-      />
-      <textarea
-        v-model="description"
-        placeholder="Description"
-        required
-      ></textarea>
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
-</template>
 
 <style>
 form {

@@ -1,3 +1,21 @@
+<template>
+  <div>
+    <h2>Aggiungi un Nuovo Posto</h2>
+    <form @submit.prevent="submitForm">
+      <input v-model="name" placeholder="Nome del posto" required />
+      <input type="file" @change="handleFileChange" />
+      <input v-model="startDate" type="date" required />
+      <input v-model="endDate" type="date" required />
+      <textarea
+        v-model="description"
+        placeholder="Descrizione"
+        required
+      ></textarea>
+      <button type="submit">Aggiungi Posto</button>
+    </form>
+  </div>
+</template>
+
 <script>
 import { store } from "../../../store/store.js";
 
@@ -22,6 +40,26 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+    getDays() {
+      const startDate = new Date(this.startDate);
+      const endDate = new Date(this.endDate);
+      const days = [];
+      let dayCount = 1;
+
+      for (
+        let date = new Date(startDate);
+        date <= endDate;
+        date.setDate(date.getDate() + 1)
+      ) {
+        days.push({
+          label: `Giorno ${dayCount}`,
+          date: date.toISOString().split("T")[0],
+        });
+        dayCount++;
+      }
+
+      return days;
+    },
     submitForm() {
       const newPlace = {
         id: Date.now(),
@@ -30,6 +68,7 @@ export default {
         startDate: this.startDate,
         endDate: this.endDate,
         description: this.description,
+        days: this.getDays(),
       };
       store.addPlace(newPlace);
       this.$router.push({ name: "DetailPlace", params: { id: newPlace.id } });
@@ -37,24 +76,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div>
-    <h2>Add a New Place</h2>
-    <form @submit.prevent="submitForm">
-      <input v-model="name" placeholder="Name of the place" required />
-      <input type="file" @change="handleFileChange" />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <textarea
-        v-model="description"
-        placeholder="Description"
-        required
-      ></textarea>
-      <button type="submit">Add Place</button>
-    </form>
-  </div>
-</template>
 
 <style>
 form {
