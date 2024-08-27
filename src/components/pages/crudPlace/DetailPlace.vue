@@ -1,27 +1,3 @@
-<template>
-  <div>
-    <h2>{{ place.name }}</h2>
-    <img :src="place.img" alt="Immagine del Posto" />
-    <p>{{ place.description }}</p>
-
-    <div v-if="place.days.length">
-      <h3>Giorni:</h3>
-      <ul>
-        <li
-          v-for="(day, index) in place.days"
-          :key="index"
-          @click="handleDayClick(index)"
-        >
-          {{ `Giorno ${index + 1}: ${day.date}` }}
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>Nessun giorno disponibile</p>
-    </div>
-  </div>
-</template>
-
 <script>
 import { store } from "../../../store/store.js";
 
@@ -59,6 +35,30 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <h2>{{ place.name }}</h2>
+    <img :src="place.img" alt="Immagine del Posto" />
+    <p>{{ place.description }}</p>
+
+    <div v-if="place.days.length">
+      <h3>Giorni:</h3>
+      <ul>
+        <li
+          v-for="(day, index) in place.days"
+          :key="index"
+          @click="handleDayClick(index)"
+        >
+          {{ `Giorno ${index + 1}: ${day.date}` }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p>Nessun giorno disponibile</p>
+    </div>
+  </div>
+</template>
 
 <style>
 img {

@@ -5,7 +5,6 @@ import HolidayPage from "./components/pages/HolidayPage.vue";
 import EditPlace from "./components/pages/crudPlace/EditPlace.vue";
 import DetailPlace from "./components/pages/crudPlace/DetailPlace.vue";
 import FormDay from "./components/pages/days/FormDay.vue";
-import EditDay from "./components/pages/days/EditDay.vue";
 import DetailDay from "./components/pages/days/DetailDay.vue";
 
 const router = createRouter({
@@ -42,12 +41,6 @@ const router = createRouter({
       path: "/organize-day/:id/:day",
       name: "FormDay",
       component: FormDay,
-      props: true,
-    },
-    {
-      path: "/edit-day/:id/:day",
-      name: "EditDay",
-      component: EditDay,
       props: true,
     },
     {

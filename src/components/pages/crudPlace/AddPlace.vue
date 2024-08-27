@@ -1,21 +1,3 @@
-<template>
-  <div>
-    <h2>Aggiungi un Nuovo Posto</h2>
-    <form @submit.prevent="submitForm">
-      <input v-model="name" placeholder="Nome del posto" required />
-      <input type="file" @change="handleFileChange" />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <textarea
-        v-model="description"
-        placeholder="Descrizione"
-        required
-      ></textarea>
-      <button type="submit">Aggiungi Posto</button>
-    </form>
-  </div>
-</template>
-
 <script>
 import { store } from "../../../store/store.js";
 
@@ -76,6 +58,24 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <h2>Aggiungi un Nuovo Posto</h2>
+    <form @submit.prevent="submitForm">
+      <input v-model="name" placeholder="Nome del posto" required />
+      <input type="file" @change="handleFileChange" />
+      <input v-model="startDate" type="date" required />
+      <input v-model="endDate" type="date" required />
+      <textarea
+        v-model="description"
+        placeholder="Descrizione"
+        required
+      ></textarea>
+      <button type="submit">Aggiungi Posto</button>
+    </form>
+  </div>
+</template>
 
 <style>
 form {

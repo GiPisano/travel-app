@@ -1,50 +1,3 @@
-<template>
-  <div>
-    <h2>Dettagli del Giorno {{ dayNumber + 1 }}</h2>
-    <form @submit.prevent="saveDayDetails">
-      <label>
-        Descrizione:
-        <textarea
-          v-model="day.description"
-          placeholder="Aggiungi una descrizione"
-        ></textarea>
-      </label>
-      <label>
-        Pranzo:
-        <input v-model="day.lunch" placeholder="Cosa hai mangiato a pranzo?" />
-      </label>
-      <label>
-        Cena:
-        <input v-model="day.dinner" placeholder="Cosa hai mangiato a cena?" />
-      </label>
-      <label>
-        Posti da Visitare:
-        <input
-          v-model="newPlace"
-          placeholder="Aggiungi un posto da visitare"
-          @keyup.enter="addPlace"
-        />
-        <button type="button" @click="addPlace">Aggiungi</button>
-      </label>
-      <ul>
-        <li v-for="(place, index) in day.placesToVisit" :key="index">
-          {{ place }}
-          <button type="button" @click="removePlace(index)">Rimuovi</button>
-        </li>
-      </ul>
-      <label>
-        Immagini (Seleziona file):
-        <input type="file" @change="handleImageUpload" multiple />
-      </label>
-      <div v-for="(image, index) in previewImages" :key="index">
-        <img :src="image" alt="Immagine Anteprima" class="image-preview" />
-      </div>
-      <button type="submit">Salva</button>
-    </form>
-    <button @click="goBack">Torna indietro</button>
-  </div>
-</template>
-
 <script>
 import { store } from "../../../store/store.js";
 
@@ -111,6 +64,53 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <h2>Dettagli del Giorno {{ dayNumber + 1 }}</h2>
+    <form @submit.prevent="saveDayDetails">
+      <label>
+        Descrizione:
+        <textarea
+          v-model="day.description"
+          placeholder="Aggiungi una descrizione"
+        ></textarea>
+      </label>
+      <label>
+        Pranzo:
+        <input v-model="day.lunch" placeholder="Cosa hai mangiato a pranzo?" />
+      </label>
+      <label>
+        Cena:
+        <input v-model="day.dinner" placeholder="Cosa hai mangiato a cena?" />
+      </label>
+      <label>
+        Posti da Visitare:
+        <input
+          v-model="newPlace"
+          placeholder="Aggiungi un posto da visitare"
+          @keyup.enter="addPlace"
+        />
+        <button type="button" @click="addPlace">Aggiungi</button>
+      </label>
+      <ul>
+        <li v-for="(place, index) in day.placesToVisit" :key="index">
+          {{ place }}
+          <button type="button" @click="removePlace(index)">Rimuovi</button>
+        </li>
+      </ul>
+      <label>
+        Immagini (Seleziona file):
+        <input type="file" @change="handleImageUpload" multiple />
+      </label>
+      <div v-for="(image, index) in previewImages" :key="index">
+        <img :src="image" alt="Immagine Anteprima" class="image-preview" />
+      </div>
+      <button type="submit">Salva</button>
+    </form>
+    <button @click="goBack">Torna indietro</button>
+  </div>
+</template>
 
 <style>
 form {
