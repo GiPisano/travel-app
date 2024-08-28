@@ -68,6 +68,8 @@ img {
 ul {
   list-style-type: none;
   padding: 0;
+  background-color: inherit;
+  border: none;
 }
 li {
   margin-bottom: 10px;
@@ -78,5 +80,6 @@ li {
 }
 li:hover {
   background-color: #e0e0e0;
+  color: black;
 }
 </style>

@@ -92,7 +92,13 @@ export default {
       <ul>
         <li v-for="(place, index) in day.placesToVisit" :key="index">
           {{ place }}
-          <button type="button" @click="removePlace(index)">Rimuovi</button>
+          <button
+            type="button"
+            @click="removePlace(index)"
+            class="btn btn-danger"
+          >
+            Rimuovi
+          </button>
         </li>
       </ul>
       <label>
@@ -119,8 +125,8 @@ label {
 input,
 textarea,
 button {
-  margin-bottom: 10px;
-  padding: 10px;
+  /* margin-bottom: 10px; */
+  /* padding: 10px; */
   font-size: 16px;
 }
 ul {
