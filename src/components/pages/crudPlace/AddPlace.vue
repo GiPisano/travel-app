@@ -52,7 +52,7 @@ export default {
       endDate: "",
       description: "",
       suggestions: [],
-      debounceTimeout: null, // Timeout per il debounce
+      debounceTimeout: null, // Timeout
     };
   },
   components: { MapComponent },
@@ -84,7 +84,7 @@ export default {
       clearTimeout(this.debounceTimeout);
       this.debounceTimeout = setTimeout(() => {
         this.searchLocation();
-      }, 300); // Debounce di 300ms per limitare le chiamate all'API
+      }, 300); //limitare le chiamate all'API
     },
     getDays() {
       const startDate = new Date(this.startDate);

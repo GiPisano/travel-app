@@ -12,8 +12,8 @@ export default {
   data() {
     return {
       map: null,
-      apiKey: import.meta.env.VITE_TOMTOM_API_KEY, // Assicurati che questa variabile sia correttamente definita nel file .env
-      searchQuery: "", // Definisci la variabile searchQuery se è necessaria
+      apiKey: import.meta.env.VITE_TOMTOM_API_KEY,
+      searchQuery: "",
     };
   },
   mounted() {
@@ -82,6 +82,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Assicurati che la mappa abbia uno spazio sufficiente per visualizzarsi */
-</style>
+<style scoped></style>
