@@ -92,7 +92,7 @@ export default {
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
-            <p class="place-name">{{ place.name }}</p>
+            <p class="place-name">Name: {{ place.name }}</p>
           </div>
           <MapComponent :searchQuery="place.name" ref="mapComponent" />
         </div>
@@ -165,7 +165,6 @@ form {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #333;
 }
 
 input,

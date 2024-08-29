@@ -1,11 +1,15 @@
 <script>
 import { store } from "../../../store/store.js";
+import MapComponent from "../../MapComponent.vue";
 
 export default {
   data() {
     return {
       place: {},
     };
+  },
+  components: {
+    MapComponent,
   },
   created() {
     this.loadPlace();
@@ -33,53 +37,118 @@ export default {
       });
     },
   },
+  watch: {
+    "place.name"(newName) {
+      if (newName) {
+        this.$nextTick(() => {
+          if (this.$refs.mapComponent) {
+            this.$refs.mapComponent.searchPlace(newName);
+          }
+        });
+      }
+    },
+  },
 };
 </script>
 
 <template>
-  <div>
-    <h2>{{ place.name }}</h2>
-    <img :src="place.img" alt="Immagine del Posto" />
-    <p>{{ place.description }}</p>
+  <div class="place-detail">
+    <h2 class="place-title">{{ place.name }}</h2>
+    <div class="place-content row">
+      <div class="place-image-container col-md-6">
+        <img :src="place.img" alt="Place Image" class="place-image" />
+      </div>
+      <div class="map-container col-md-6">
+        <MapComponent :searchQuery="place.name" ref="mapComponent" />
+      </div>
+    </div>
 
-    <div v-if="place.days.length">
+    <p class="place-description">{{ place.description }}</p>
+
+    <div v-if="place.days.length" class="days-list">
       <h3>Days:</h3>
       <ul>
         <li
           v-for="(day, index) in place.days"
           :key="index"
           @click="handleDayClick(index)"
+          class="day-item"
         >
           {{ `Day ${index + 1}: ${day.date}` }}
         </li>
       </ul>
     </div>
-    <div v-else>
+    <div v-else class="no-days">
       <p>No days available</p>
     </div>
   </div>
 </template>
 
-<style>
-img {
-  max-width: 100%;
-  height: auto;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  background-color: inherit;
-  border: none;
-}
-li {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-}
-li:hover {
-  background-color: #e0e0e0;
-  color: black;
+<style lang="scss" scoped>
+.place-detail {
+  padding: 20px;
+  .place-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .place-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .place-image-container {
+      flex: 1;
+
+      .place-image {
+        width: 100%;
+        height: 378px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .place-description {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .days-list {
+    margin-top: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #007bff;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+      .day-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+          background-color: #007bff;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .no-days {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #999;
+  }
 }
 </style>

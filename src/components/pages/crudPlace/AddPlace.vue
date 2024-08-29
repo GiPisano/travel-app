@@ -144,9 +144,7 @@ export default {
           </div>
 
           <div class="mb-3">
-            <label for="formFileMultiple" class="form-label"
-              >Multiple files input example</label
-            >
+            <label for="formFileMultiple" class="form-label">Add img</label>
             <input
               class="form-control"
               type="file"

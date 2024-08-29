@@ -32,7 +32,6 @@ export default {
 
 <style lang="scss">
 @use "./styles/general.scss";
-@import url("https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/maps.css");
 
 body {
   background-color: black;

@@ -54,109 +54,136 @@ export default {
 
 <template>
   <div class="detail-day-container">
-    <div class="day-info-card" v-if="day">
-      <h2>Dettagli del Giorno {{ dayNumber + 1 }}</h2>
+    <div class="form-controls">
+      <button @click="backToPlace" class="back-button">
+        Back to Place Details
+      </button>
+    </div>
+    <div class="day-info">
+      <h2>Details for Day {{ dayNumber + 1 }}</h2>
 
       <p v-if="day.description" class="description">
         {{ day.description }}
       </p>
-      <p v-else class="no-description">Nessuna descrizione disponibile.</p>
+      <p v-else class="no-description">No description available.</p>
 
       <div class="activities-section">
-        <h3>Pranzo:</h3>
+        <h3>Lunch:</h3>
         <p v-if="day.lunch">{{ day.lunch }}</p>
-        <p v-else>Nessun dettaglio pranzo disponibile.</p>
+        <p v-else>No lunch details available.</p>
 
-        <h3>Cena:</h3>
+        <h3>Dinner:</h3>
         <p v-if="day.dinner">{{ day.dinner }}</p>
-        <p v-else>Nessun dettaglio cena disponibile.</p>
+        <p v-else>No dinner details available.</p>
       </div>
 
       <div class="places-section">
-        <h3>Posti da Visitare:</h3>
-        <ul>
+        <h3>Places to Visit:</h3>
+        <ul class="places-list">
           <li v-for="(place, index) in day.placesToVisit || []" :key="index">
             {{ place }}
           </li>
         </ul>
         <p v-if="!(day.placesToVisit && day.placesToVisit.length)">
-          Nessun posto da visitare disponibile.
+          No places to visit available.
         </p>
       </div>
 
       <div class="images-section">
-        <h3>Immagini:</h3>
+        <h3>Images:</h3>
         <div v-if="day.images && day.images.length">
           <Carousel :images="day.images" />
         </div>
-        <p v-else>Nessuna immagine disponibile.</p>
+        <p v-else>No images available.</p>
       </div>
 
       <div class="actions">
-        <button class="edit-button" @click="editDay">Modifica</button>
-        <button class="back-button" @click="backToPlace">
-          Torna al Dettaglio del Luogo
-        </button>
+        <button class="edit-button" @click="editDay">Edit</button>
+        <button class="submit-button" @click="saveDayDetails">Save</button>
       </div>
     </div>
-    <div v-else>Caricamento in corso...</div>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .detail-day-container {
-  max-width: 800px;
-  margin: 0 auto;
   padding: 20px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  color: #fff; /* White text for contrast */
 }
 
-.day-info-card {
-  background-color: #fff;
+.form-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+
+  .back-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #6c757d; /* Secondary color */
+    color: #fff;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #5a6268; /* Darker shade for hover effect */
+    }
+  }
+}
+
+.day-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: transparent; /* No card effect, transparent background */
+  border-radius: 0;
+  box-shadow: none; /* No shadow */
 }
 
 h2 {
-  margin-bottom: 10px;
-  color: #333;
+  font-size: 24px;
+  color: #fff;
 }
 
 .description,
 .no-description {
-  margin-bottom: 20px;
   font-size: 16px;
   line-height: 1.5;
-  color: #555;
+  color: #ddd;
 }
 
 .no-description {
-  color: #999;
+  color: #aaa;
 }
 
 .activities-section,
 .places-section,
 .images-section {
-  margin-bottom: 20px;
-  color: black;
+  color: #ddd;
 }
 
 h3 {
   margin-bottom: 10px;
-  color: #007bff;
+  color: #007bff; /* Primary color */
 }
 
-ul {
+.places-list {
   list-style-type: none;
   padding: 0;
-}
+  margin: 0;
 
-li {
-  font-size: 16px;
-  color: #555;
+  li {
+    font-size: 16px;
+    color: #ddd;
+    padding: 10px;
+
+    &:hover {
+      color: black;
+    }
+  }
 }
 
 .actions {
@@ -173,20 +200,20 @@ li {
     transition: background-color 0.3s ease;
 
     &.edit-button {
-      background-color: #28a745;
+      background-color: #28a745; /* Success color */
       color: #fff;
 
       &:hover {
-        background-color: #218838;
+        background-color: #218838; /* Darker shade for hover effect */
       }
     }
 
-    &.back-button {
-      background-color: #007bff;
+    &.submit-button {
+      background-color: #007bff; /* Primary color */
       color: #fff;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; /* Darker shade for hover effect */
       }
     }
   }
