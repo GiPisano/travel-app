@@ -80,6 +80,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: end;
+      flex-direction: column;
       gap: 0.5rem;
       button {
         background-color: white;

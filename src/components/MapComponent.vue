@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="mapElement" style="width: 100%; height: 500px"></div>
+    <div ref="mapElement" style="width: 100%; height: 378px"></div>
   </div>
 </template>
 
@@ -76,7 +76,9 @@ export default {
   },
   watch: {
     searchQuery(newQuery) {
-      this.searchPlace(newQuery);
+      if (!this.isSuggestionSelected) {
+        this.searchPlace(newQuery);
+      }
     },
   },
 };

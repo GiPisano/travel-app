@@ -1,40 +1,90 @@
 <template>
   <div>
     <h2>Aggiungi un Nuovo Posto</h2>
+
     <form @submit.prevent="submitForm">
-      <div style="display: flex; flex-direction: column">
-        <div style="display: flex; align-items: center">
-          <input
-            v-model="name"
-            placeholder="Nome del posto"
-            required
-            @input="debouncedSearchLocation"
+      <div class="row">
+        <div class="col-md-6">
+          <div style="display: flex; flex-direction: column">
+            <div>
+              <input
+                class="search-location-name"
+                v-model="name"
+                placeholder="Nome del posto"
+                required
+                @input="debouncedSearchLocation"
+              />
+              <!-- <button @click="searchLocation" type="button">Cerca</button> -->
+            </div>
+            <ul v-if="suggestions.length" class="suggestions-list">
+              <li
+                v-for="(suggestion, index) in suggestions"
+                :key="index"
+                @click="selectSuggestion(suggestion)"
+              >
+                {{ suggestion.address.freeformAddress }}
+              </li>
+            </ul>
+          </div>
+          <MapComponent
+            ref="mapComponent"
+            @update-suggestions="updateSuggestions"
           />
-          <button @click="searchLocation" type="button">Cerca</button>
         </div>
-        <ul v-if="suggestions.length" class="suggestions-list">
-          <li
-            v-for="(suggestion, index) in suggestions"
-            :key="index"
-            @click="selectSuggestion(suggestion)"
-          >
-            {{ suggestion.address.freeformAddress }}
-          </li>
-        </ul>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="start-date" class="form-label">Start Date</label>
+            <input
+              v-model="startDate"
+              type="date"
+              id="start-date"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="end-date" class="form-label">End Date</label>
+            <input
+              v-model="endDate"
+              type="date"
+              id="end-date"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label"
+              >Multiple files input example</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFileMultiple"
+              aria-describedby="button-addon2"
+              multiple
+              @change="handleFileChange"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="textarea-description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              v-model="description"
+              placeholder="Description..."
+              required
+              class="form-control"
+              id="textarea-description"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <button type="submit">Aggiungi Posto</button>
+          </div>
+        </div>
       </div>
-      <MapComponent
-        ref="mapComponent"
-        @update-suggestions="updateSuggestions"
-      />
-      <input type="file" @change="handleFileChange" />
-      <input v-model="startDate" type="date" required />
-      <input v-model="endDate" type="date" required />
-      <textarea
-        v-model="description"
-        placeholder="Descrizione"
-        required
-      ></textarea>
-      <button type="submit">Aggiungi Posto</button>
     </form>
   </div>
 </template>
@@ -52,7 +102,7 @@ export default {
       endDate: "",
       description: "",
       suggestions: [],
-      debounceTimeout: null, // Timeout
+      isSuggestionSelected: false,
     };
   },
   components: { MapComponent },
@@ -72,19 +122,25 @@ export default {
       this.suggestions = suggestions;
     },
     selectSuggestion(suggestion) {
+      this.isSuggestionSelected = true;
       this.name = suggestion.address.freeformAddress;
-      this.searchLocation(); // Cerca nuovamente con il suggerimento selezionato
+      this.searchLocation();
       this.suggestions = [];
     },
     searchLocation() {
-      if (this.name.trim() === "") return; // Evita ricerche con stringhe vuote
+      if (this.isSuggestionSelected) {
+        this.isSuggestionSelected = false;
+        return;
+      }
+
+      if (this.name.trim() === "") return;
       this.$refs.mapComponent.searchPlace(this.name);
     },
     debouncedSearchLocation() {
       clearTimeout(this.debounceTimeout);
       this.debounceTimeout = setTimeout(() => {
         this.searchLocation();
-      }, 300); //limitare le chiamate all'API
+      }, 300); // Chiamata API limitata
     },
     getDays() {
       const startDate = new Date(this.startDate);
@@ -159,5 +215,8 @@ button {
 }
 .suggestions-list li:hover {
   background-color: #f0f0f0;
+}
+.search-location-name {
+  width: 100%;
 }
 </style>

@@ -4,7 +4,7 @@
   <div id="header">
     <router-link
       :to="{ name: 'home' }"
-      class="nav-link"
+      class="nav-link home"
       :class="{ active: $route.name === 'home' }"
       >Home</router-link
     >
@@ -36,6 +36,17 @@
 
   .nav-link:hover {
     color: orange;
+  }
+  .home {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  #header {
+    .home {
+      display: block;
+    }
   }
 }
 </style>

@@ -47,11 +47,24 @@ body {
   }
 
   main {
-    width: 70%;
+    width: 100%;
     height: calc(100vh - 60px);
     border-radius: 2rem;
     background-color: rgb(43, 43, 43);
     overflow: scroll;
+  }
+
+  nav {
+    display: none;
+  }
+
+  @media screen and (min-width: 1400px) {
+    nav {
+      display: block;
+    }
+    main {
+      width: 70%;
+    }
   }
 }
 </style>
