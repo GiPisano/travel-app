@@ -13,7 +13,7 @@ export default {
     },
     removePlace(place) {
       store.removePlace(place);
-      this.$router.push({ name: "holiday" });
+      this.$router.push({ name: "Home" });
     },
     editPlace(place) {
       this.$router.push({ name: "EditPlace", params: { id: place.id } });
@@ -32,7 +32,7 @@ export default {
     </div>
     <div>
       <div class="box-place">
-        <div v-for="place in places" :key="place.id" class="container-place">
+        <div v-for="place in places" :key="place.id">
           <div class="circle">
             <img :src="place.img" alt="Preview" />
           </div>
@@ -49,6 +49,7 @@ export default {
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </div>
+          <hr class="white" />
         </div>
       </div>
     </div>
@@ -61,12 +62,7 @@ export default {
   flex-direction: column;
   gap: 20px;
 }
-.container-place {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 .container-nav {
   margin: 20px;
   .btn {
@@ -78,10 +74,11 @@ export default {
   div {
     .buttons-utility {
       display: flex;
-      align-items: center;
+
       justify-content: end;
       flex-direction: column;
       gap: 0.5rem;
+
       button {
         background-color: white;
         color: black;
@@ -104,7 +101,7 @@ export default {
 .circle {
   width: 100px;
   height: 100px;
-  margin-right: 2rem;
+
   img {
     width: 100%;
     height: 100%;
@@ -113,5 +110,9 @@ export default {
 }
 p {
   margin: 0;
+}
+
+.white {
+  color: white;
 }
 </style>

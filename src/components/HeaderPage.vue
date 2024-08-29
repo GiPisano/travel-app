@@ -1,18 +1,38 @@
-<script></script>
+<script>
+import { store } from "../store/store";
+
+export default {
+  data() {
+    return {
+      places: store.places,
+    };
+  },
+};
+</script>
 
 <template>
   <div id="header">
     <router-link
       :to="{ name: 'home' }"
-      class="nav-link home"
+      class="nav-link"
       :class="{ active: $route.name === 'home' }"
       >Home</router-link
     >
+
     <router-link
+      v-if="this.places.length"
       :to="{ name: 'holiday' }"
       class="nav-link"
       :class="{ active: $route.name === 'holiday' }"
       >Holiday</router-link
+    >
+
+    <router-link
+      v-if="this.places.length"
+      :to="{ name: 'NavPage' }"
+      class="nav-link go-to-nav"
+      :class="{ active: $route.name === 'NavPage' }"
+      >Nav</router-link
     >
   </div>
 </template>
@@ -37,16 +57,10 @@
   .nav-link:hover {
     color: orange;
   }
-  .home {
-    display: none;
-  }
 }
-
-@media screen and (max-width: 1400px) {
-  #header {
-    .home {
-      display: block;
-    }
+@media screen and (min-width: 992px) {
+  .go-to-nav {
+    display: none;
   }
 }
 </style>

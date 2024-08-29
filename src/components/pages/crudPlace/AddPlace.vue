@@ -1,94 +1,3 @@
-<template>
-  <div>
-    <h2>Aggiungi un Nuovo Posto</h2>
-
-    <form @submit.prevent="submitForm">
-      <div class="row">
-        <div class="col-md-6">
-          <div style="display: flex; flex-direction: column">
-            <div>
-              <input
-                class="search-location-name"
-                v-model="name"
-                placeholder="Nome del posto"
-                required
-                @input="debouncedSearchLocation"
-              />
-              <!-- <button @click="searchLocation" type="button">Cerca</button> -->
-            </div>
-            <ul v-if="suggestions.length" class="suggestions-list">
-              <li
-                v-for="(suggestion, index) in suggestions"
-                :key="index"
-                @click="selectSuggestion(suggestion)"
-              >
-                {{ suggestion.address.freeformAddress }}
-              </li>
-            </ul>
-          </div>
-          <MapComponent
-            ref="mapComponent"
-            @update-suggestions="updateSuggestions"
-          />
-        </div>
-
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="start-date" class="form-label">Start Date</label>
-            <input
-              v-model="startDate"
-              type="date"
-              id="start-date"
-              class="form-control"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="end-date" class="form-label">End Date</label>
-            <input
-              v-model="endDate"
-              type="date"
-              id="end-date"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="formFileMultiple" class="form-label"
-              >Multiple files input example</label
-            >
-            <input
-              class="form-control"
-              type="file"
-              id="formFileMultiple"
-              aria-describedby="button-addon2"
-              multiple
-              @change="handleFileChange"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="textarea-description" class="form-label"
-              >Description</label
-            >
-            <textarea
-              v-model="description"
-              placeholder="Description..."
-              required
-              class="form-control"
-              id="textarea-description"
-              rows="3"
-            ></textarea>
-          </div>
-          <div class="mb-3">
-            <button type="submit">Aggiungi Posto</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</template>
-
 <script>
 import { store } from "../../../store/store.js";
 import MapComponent from "../../MapComponent.vue";
@@ -179,6 +88,96 @@ export default {
 };
 </script>
 
+<template>
+  <div>
+    <h2>Add Destination</h2>
+
+    <form @submit.prevent="submitForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="container-search-location-name">
+            <input
+              class="search-location-name"
+              v-model="name"
+              placeholder="Destination name.."
+              required
+              @input="debouncedSearchLocation"
+            />
+            <!-- <button @click="searchLocation" type="button">Cerca</button> -->
+
+            <ul v-if="suggestions.length" class="suggestions-list">
+              <li
+                v-for="(suggestion, index) in suggestions"
+                :key="index"
+                @click="selectSuggestion(suggestion)"
+              >
+                {{ suggestion.address.freeformAddress }}
+              </li>
+            </ul>
+          </div>
+          <MapComponent
+            ref="mapComponent"
+            @update-suggestions="updateSuggestions"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="start-date" class="form-label">Start Date</label>
+            <input
+              v-model="startDate"
+              type="date"
+              id="start-date"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="end-date" class="form-label">End Date</label>
+            <input
+              v-model="endDate"
+              type="date"
+              id="end-date"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label"
+              >Multiple files input example</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFileMultiple"
+              aria-describedby="button-addon2"
+              multiple
+              @change="handleFileChange"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="textarea-description" class="form-label"
+              >Description</label
+            >
+            <textarea
+              v-model="description"
+              placeholder="Description..."
+              required
+              class="form-control"
+              id="textarea-description"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <button type="submit">Add Destination</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
 <style>
 form {
   display: flex;
@@ -208,6 +207,8 @@ button {
   overflow-y: auto;
   z-index: 1000;
   color: black;
+  position: absolute;
+  width: 100%;
 }
 .suggestions-list li {
   padding: 10px;
@@ -218,5 +219,8 @@ button {
 }
 .search-location-name {
   width: 100%;
+}
+.container-search-location-name {
+  position: relative;
 }
 </style>

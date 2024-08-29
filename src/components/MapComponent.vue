@@ -1,13 +1,6 @@
-<template>
-  <div>
-    <div ref="mapElement" style="width: 100%; height: 378px"></div>
-  </div>
-</template>
-
 <script>
 import tt from "@tomtom-international/web-sdk-maps";
 import ttServices from "@tomtom-international/web-sdk-services";
-
 export default {
   data() {
     return {
@@ -23,16 +16,13 @@ export default {
     if (typeof tt.services === "undefined") {
       tt.services = ttServices.services;
     }
-
-    console.log(tt);
-    console.log(tt.services);
   },
   methods: {
     initializeMap() {
       this.map = tt.map({
         key: this.apiKey,
         container: this.$refs.mapElement,
-        center: [0, 0],
+        center: [12.4964, 41.9028],
         zoom: 10,
       });
     },
@@ -83,5 +73,14 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div>
+    <div
+      ref="mapElement"
+      style="width: 100%; height: 378px; position: relative"
+    ></div>
+  </div>
+</template>
 
 <style scoped></style>

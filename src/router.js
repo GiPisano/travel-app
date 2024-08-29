@@ -6,6 +6,7 @@ import EditPlace from "./components/pages/crudPlace/EditPlace.vue";
 import DetailPlace from "./components/pages/crudPlace/DetailPlace.vue";
 import FormDay from "./components/pages/days/FormDay.vue";
 import DetailDay from "./components/pages/days/DetailDay.vue";
+import NavPage from "./components/NavPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -48,6 +49,11 @@ const router = createRouter({
       name: "DetailDay",
       component: DetailDay,
       props: true,
+    },
+    {
+      path: "/nav",
+      name: "NavPage",
+      component: NavPage,
     },
   ],
 });

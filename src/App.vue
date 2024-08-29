@@ -1,10 +1,14 @@
 <script>
 import HeaderPage from "./components/HeaderPage.vue";
 import NavPage from "./components/NavPage.vue";
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import { store } from "./store/store";
 
 export default {
   data() {
-    return {};
+    return {
+      places: store.places,
+    };
   },
 
   components: {
@@ -16,7 +20,7 @@ export default {
 
 <template>
   <div class="container-app">
-    <nav>
+    <nav :style="this.places.length ? { width: '30%' } : { display: 'none' }">
       <nav-page></nav-page>
     </nav>
     <main>
@@ -28,6 +32,7 @@ export default {
 
 <style lang="scss">
 @use "./styles/general.scss";
+@import url("https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/maps.css");
 
 body {
   background-color: black;
@@ -53,18 +58,17 @@ body {
     background-color: rgb(43, 43, 43);
     overflow: scroll;
   }
+}
 
+@media screen and (max-width: 992px) {
+  body {
+    background-color: blue;
+  }
   nav {
     display: none;
   }
-
-  @media screen and (min-width: 1400px) {
-    nav {
-      display: block;
-    }
-    main {
-      width: 70%;
-    }
+  main {
+    width: 100%;
   }
 }
 </style>

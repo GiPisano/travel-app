@@ -1,5 +1,6 @@
 <script>
 import { store } from "../../../store/store.js";
+import Carousel from "../../Carousel.vue";
 
 export default {
   data() {
@@ -10,6 +11,9 @@ export default {
   },
   created() {
     this.loadDayDetails();
+  },
+  components: {
+    Carousel,
   },
   methods: {
     loadDayDetails() {
@@ -83,13 +87,7 @@ export default {
       <div class="images-section">
         <h3>Immagini:</h3>
         <div v-if="day.images && day.images.length">
-          <img
-            v-for="(image, index) in day.images"
-            :key="index"
-            :src="image"
-            alt="Immagine Giorno"
-            class="image-preview"
-          />
+          <Carousel :images="day.images" />
         </div>
         <p v-else>Nessuna immagine disponibile.</p>
       </div>
@@ -159,13 +157,6 @@ ul {
 li {
   font-size: 16px;
   color: #555;
-}
-
-.image-preview {
-  max-width: 200px;
-  max-height: 200px;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .actions {

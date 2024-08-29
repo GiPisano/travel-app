@@ -43,19 +43,19 @@ export default {
     <p>{{ place.description }}</p>
 
     <div v-if="place.days.length">
-      <h3>Giorni:</h3>
+      <h3>Days:</h3>
       <ul>
         <li
           v-for="(day, index) in place.days"
           :key="index"
           @click="handleDayClick(index)"
         >
-          {{ `Giorno ${index + 1}: ${day.date}` }}
+          {{ `Day ${index + 1}: ${day.date}` }}
         </li>
       </ul>
     </div>
     <div v-else>
-      <p>Nessun giorno disponibile</p>
+      <p>No days available</p>
     </div>
   </div>
 </template>
