@@ -38,8 +38,28 @@ export default {
       this.day.placesToVisit.splice(index, 1);
     },
     handleImageUpload(event) {
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/avif",
+        "image/bmp",
+        "image/tiff",
+        "image/svg+xml",
+        "image/heif",
+        "image/heic",
+        "image/x-icon",
+      ];
+
       const files = event.target.files;
       for (const file of files) {
+        if (!validImageTypes.includes(file.type)) {
+          alert(
+            "Please select a valid image file (JPEG, PNG, GIF, WebP, AVIF, BMP, TIFF, SVG, HEIF, HEIC, ICO)"
+          );
+          continue;
+        }
         const reader = new FileReader();
         reader.onload = (e) => {
           this.previewImages.push(e.target.result);

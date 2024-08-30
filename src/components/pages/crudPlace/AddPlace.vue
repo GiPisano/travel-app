@@ -12,6 +12,8 @@ export default {
       description: "",
       suggestions: [],
       isSuggestionSelected: false,
+      todayDate: new Date().toISOString().split("T")[0], // Data di oggi in formato YYYY-MM-DD
+      errorMessage: "", // Per mostrare un messaggio di errore se il file non è un'immagine
     };
   },
   components: { MapComponent },
@@ -20,6 +22,27 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        const validImageTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+          "image/avif",
+          "image/bmp",
+          "image/tiff",
+          "image/svg+xml",
+          "image/heif",
+          "image/heic",
+          "image/x-icon",
+        ];
+        if (!validImageTypes.includes(file.type)) {
+          alert(
+            "Please select a valid image file (JPEG, PNG, GIF, WebP, AVIF, BMP, TIFF, SVG, HEIF, HEIC, ICO)"
+          );
+          this.img = null;
+          event.target.value = ""; // Resetta l'input file
+          return;
+        }
         const reader = new FileReader();
         reader.onload = (e) => {
           this.img = e.target.result;
@@ -85,6 +108,16 @@ export default {
       this.$router.push({ name: "DetailPlace", params: { id: newPlace.id } });
     },
   },
+  watch: {
+    startDate(newStartDate) {
+      if (newStartDate) {
+        // Se la endDate è inferiore alla nuova startDate, resetta endDate
+        if (new Date(this.endDate) < new Date(newStartDate)) {
+          this.endDate = "";
+        }
+      }
+    },
+  },
 };
 </script>
 
@@ -103,7 +136,6 @@ export default {
               required
               @input="debouncedSearchLocation"
             />
-            <!-- <button @click="searchLocation" type="button">Cerca</button> -->
 
             <ul v-if="suggestions.length" class="suggestions-list">
               <li
@@ -129,6 +161,7 @@ export default {
               type="date"
               id="start-date"
               class="form-control"
+              :min="todayDate"
               required
             />
           </div>
@@ -139,6 +172,7 @@ export default {
               type="date"
               id="end-date"
               class="form-control"
+              :min="startDate || todayDate"
               required
             />
           </div>
@@ -152,6 +186,7 @@ export default {
               aria-describedby="button-addon2"
               multiple
               @change="handleFileChange"
+              required
             />
           </div>
           <div class="mb-3">

@@ -99,7 +99,6 @@ export default {
 
       <div class="actions">
         <button class="edit-button" @click="editDay">Edit</button>
-        <button class="submit-button" @click="saveDayDetails">Save</button>
       </div>
     </div>
   </div>

@@ -13,6 +13,7 @@ export default {
     this.loadPlace();
   },
   watch: {
+    "$route.params.id": "loadPlace",
     "place.name"(newName) {
       if (newName) {
         this.$nextTick(() => {
@@ -36,20 +37,43 @@ export default {
         });
       }
     },
+
     handleFileChange(event) {
+      const validImageTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/avif",
+        "image/bmp",
+        "image/tiff",
+        "image/svg+xml",
+        "image/heif",
+        "image/heic",
+        "image/x-icon",
+      ];
+
       const files = event.target.files;
-      this.place.img = [];
+      this.place.img = []; // Pulisce la lista delle immagini esistenti
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const reader = new FileReader();
 
+        if (!validImageTypes.includes(file.type)) {
+          alert(
+            "Please select valid image files (JPEG, PNG, GIF, WebP, AVIF, BMP, TIFF, SVG, HEIF, HEIC, ICO)"
+          );
+          continue; // Salta il file non valido
+        }
+
+        const reader = new FileReader();
         reader.onload = (e) => {
           this.place.img.push(e.target.result);
         };
         reader.readAsDataURL(file);
       }
     },
+
     getDaysWithinRange(startDate, endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
