@@ -11,7 +11,7 @@ Travel App è una web app per la pianificazione e gestione dei tuoi viaggi. Ti p
 
 ## **Demo**
 
-Link alla demo dell'app: [Travel App Demo](https://il-tuo-link-a-netlify.com)
+Link alla demo dell'app: [Travel App Demo](https://your-travel-diary.netlify.app/)
 
 ## **Funzionalità**
 
