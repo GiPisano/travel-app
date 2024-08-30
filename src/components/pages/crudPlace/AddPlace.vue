@@ -122,7 +122,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="add-place">
     <h2>Add Destination</h2>
 
     <form @submit.prevent="submitForm">
@@ -178,11 +178,11 @@ export default {
           </div>
 
           <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Add img</label>
+            <label for="add-img-place" class="form-label">Add img</label>
             <input
               class="form-control"
               type="file"
-              id="formFileMultiple"
+              id="add-img-place"
               aria-describedby="button-addon2"
               multiple
               @change="handleFileChange"
@@ -255,5 +255,9 @@ button {
 }
 .container-search-location-name {
   position: relative;
+}
+
+.add-place {
+  padding: 20px;
 }
 </style>

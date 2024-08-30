@@ -55,14 +55,11 @@ body {
     height: calc(100vh - 60px);
     border-radius: 2rem;
     background-color: rgb(43, 43, 43);
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
 
 @media screen and (max-width: 992px) {
-  body {
-    background-color: blue;
-  }
   nav {
     display: none;
   }

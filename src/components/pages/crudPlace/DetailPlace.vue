@@ -14,6 +14,31 @@ export default {
   created() {
     this.loadPlace();
   },
+  computed: {
+    getDayDetailText() {
+      return (dayIndex) => {
+        const dayDetails = this.place.days[dayIndex];
+        const dayHasDetails =
+          dayDetails.description ||
+          dayDetails.lunch ||
+          dayDetails.dinner ||
+          dayDetails.placesToVisit?.length ||
+          dayDetails.images?.length;
+
+        return dayHasDetails ? "Detail Available" : "Add Detail";
+      };
+    },
+    isDayPast() {
+      return (dayIndex) => {
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1); // Imposta la data a ieri
+        const dayDate = new Date(this.place.days[dayIndex].date);
+        // Considera passato solo se il giorno è inferiore a ieri
+        return dayDate < yesterday;
+      };
+    },
+  },
   methods: {
     loadPlace() {
       const placeId = parseInt(this.$route.params.id);
@@ -31,10 +56,17 @@ export default {
         dayDetails.placesToVisit?.length ||
         dayDetails.images?.length;
 
-      this.$router.push({
-        name: dayHasDetails ? "DetailDay" : "FormDay",
-        params: { id: this.place.id, day: dayIndex },
-      });
+      if (this.isDayPast(dayIndex)) {
+        this.$router.push({
+          name: "DetailDay",
+          params: { id: this.place.id, day: dayIndex },
+        });
+      } else {
+        this.$router.push({
+          name: dayHasDetails ? "DetailDay" : "FormDay",
+          params: { id: this.place.id, day: dayIndex },
+        });
+      }
     },
   },
   watch: {
@@ -72,9 +104,9 @@ export default {
           v-for="(day, index) in place.days"
           :key="index"
           @click="handleDayClick(index)"
-          class="day-item"
+          :class="{ 'day-item': true, 'day-past': isDayPast(index) }"
         >
-          {{ `Day ${index + 1}: ${day.date}` }}
+          {{ `Day ${index + 1}: ${day.date}` }} - {{ getDayDetailText(index) }}
         </li>
       </ul>
     </div>
@@ -140,6 +172,17 @@ export default {
         &:hover {
           background-color: #007bff;
           color: #fff;
+        }
+
+        &.day-past {
+          background-color: #f8d7da;
+          border-color: #f5c6cb;
+          color: #721c24;
+
+          &:hover {
+            background-color: #f5c6cb;
+            color: #721c24;
+          }
         }
       }
     }

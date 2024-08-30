@@ -81,7 +81,7 @@ export default {
         <h3>Places to Visit:</h3>
         <ul class="places-list">
           <li v-for="(place, index) in day.placesToVisit || []" :key="index">
-            {{ place }}
+            <strong>Place {{ index + 1 }}:</strong> {{ place }}
           </li>
         </ul>
         <p v-if="!(day.placesToVisit && day.placesToVisit.length)">
@@ -173,13 +173,17 @@ h3 {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 
   li {
     font-size: 16px;
     color: #ddd;
     padding: 10px;
-
+    border: 1px solid white;
     &:hover {
+      background-color: white;
       color: black;
     }
   }

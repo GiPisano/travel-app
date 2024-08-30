@@ -15,9 +15,9 @@ export default {
 };
 </script>
 <template>
-  <div class="row m-2 g-5">
-    <div v-for="place in places" class="col-md-3">
-      <div class="container-place" @click="viewDetails(place)">
+  <div class="m-2 g-5 container-place">
+    <div v-for="place in places" class="">
+      <div @click="viewDetails(place)">
         <div class="circle">
           <img :src="place.img" alt="Preview" />
           <div class="name">{{ place.name }}</div>
@@ -28,6 +28,9 @@ export default {
 </template>
 <style lang="scss" scoped>
 .container-place {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
   cursor: pointer;
   .circle {
     width: 150px;
@@ -40,11 +43,22 @@ export default {
     }
   }
 
+  .row {
+    flex-wrap: wrap;
+  }
   .name {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .container-place {
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

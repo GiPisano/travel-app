@@ -32,7 +32,7 @@ export default {
     </div>
     <div>
       <div class="box-place">
-        <div v-for="place in places" :key="place.id">
+        <div v-for="place in places" :key="place.id" class="container-place">
           <div class="circle">
             <img :src="place.img" alt="Preview" />
           </div>
@@ -58,9 +58,11 @@ export default {
 
 <style scoped lang="scss">
 .box-place {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  .container-place {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .container-nav {
@@ -101,6 +103,7 @@ export default {
 .circle {
   width: 100px;
   height: 100px;
+  margin: 0 auto;
 
   img {
     width: 100%;
