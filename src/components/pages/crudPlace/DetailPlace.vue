@@ -86,16 +86,15 @@ export default {
 <template>
   <div class="place-detail">
     <h2 class="place-title">{{ place.name }}</h2>
-    <div class="place-content row">
-      <div class="place-image-container col-md-6">
+    <div class="place-content">
+      <div class="place-image-container">
         <img :src="place.img" alt="Place Image" class="place-image" />
-      </div>
-      <div class="map-container col-md-6">
-        <MapComponent :searchQuery="place.name" ref="mapComponent" />
       </div>
     </div>
 
-    <p class="place-description">{{ place.description }}</p>
+    <p class="place-description">
+      <h3>Description:</h3> {{ place.description }}
+    </p>
 
     <div v-if="place.days.length" class="days-list">
       <h3>Days:</h3>
@@ -112,6 +111,9 @@ export default {
     </div>
     <div v-else class="no-days">
       <p>No days available</p>
+    </div>
+    <div class="map-container">
+      <MapComponent :searchQuery="place.name" ref="mapComponent" />
     </div>
   </div>
 </template>
@@ -149,11 +151,7 @@ export default {
   .days-list {
     margin-top: 20px;
 
-    h3 {
-      margin-bottom: 10px;
-      font-size: 20px;
-      color: #007bff;
-    }
+    
 
     ul {
       list-style-type: none;
@@ -187,6 +185,11 @@ export default {
       }
     }
   }
+  h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #007bff;
+    }
 
   .no-days {
     margin-top: 20px;
