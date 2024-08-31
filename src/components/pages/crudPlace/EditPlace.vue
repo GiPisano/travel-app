@@ -111,8 +111,8 @@ export default {
 
 <template>
   <div>
-    <h2>Edit Destination</h2>
     <form @submit.prevent="updatePlace">
+      <h2>Edit Destination</h2>
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
@@ -183,6 +183,7 @@ export default {
 form {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .place-name {
