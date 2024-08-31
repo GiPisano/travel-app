@@ -11,9 +11,14 @@ export default {
     goToAddPlace() {
       this.$router.push({ name: "AddPlace" });
     },
-    removePlace(place) {
+    deletePlace(place) {
       store.removePlace(place);
-      this.$router.push({ name: "holiday" });
+
+      if (store.places.length > 0) {
+        this.$router.push({ name: "holiday" });
+      } else {
+        this.$router.push({ name: "home" });
+      }
     },
     editPlace(place) {
       this.$router.push({ name: "EditPlace", params: { id: place.id } });
