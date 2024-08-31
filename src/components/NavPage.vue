@@ -50,7 +50,7 @@ export default {
             <button @click="editPlace(place)" class="pen">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
-            <button @click="removePlace(place)" class="trash">
+            <button @click="deletePlace(place)" class="trash">
               <i class="fa-regular fa-trash-can"></i>
             </button>
           </div>
